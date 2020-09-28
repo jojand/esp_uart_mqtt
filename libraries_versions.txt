@@ -1,3 +1,0 @@
-esp8266/2.3.0/libraries/ESP8266WiFi
-PubSubClient/2.6.0
-esp8266/2.3.0/libraries/SoftwareSerial

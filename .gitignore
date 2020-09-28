@@ -3,3 +3,6 @@
 .settings/
 Release/
 sloeber.ino.cpp
+.pio
+.vscode
+

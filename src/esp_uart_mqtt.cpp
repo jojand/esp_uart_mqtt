@@ -1,7 +1,6 @@
 #include <ESP8266WiFi.h>
 #include <PubSubClient.h>
 #include "Streaming.h"
-#include <SoftwareSerial.h>
 
 //#define SERIAL_DEBUG
 
@@ -81,6 +80,15 @@ void reconnect() {
     }
 }
 
+void callback(char* topic, byte* payload, unsigned int length) {
+	char message[length+1];
+	for (unsigned int i = 0; i < length; i++) {
+		message[i] = payload[i];
+	}
+	message[length] = '\0';
+	Serial << MQTT_HEADER << topic << " " << message << "*" << "\n";
+}
+
 void setup() {
     Serial.begin(SERIAL_BAUD);
     Serial.swap();
@@ -126,15 +134,6 @@ void parseAndPublish() {
         Serial << ERROR_HEADER << "Error reading serial!" << endl;
 #endif
     }
-}
-
-void callback(char* topic, byte* payload, unsigned int length) {
-	char message[length+1];
-	for (unsigned int i = 0; i < length; i++) {
-		message[i] = payload[i];
-	}
-	message[length] = '\0';
-	Serial << MQTT_HEADER << topic << " " << message << "*" << "\n";
 }
 
 void fastLoop() {
